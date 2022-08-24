@@ -1,11 +1,22 @@
 #include <stdio.h>
 #include <string.h>
-typedef struct agenda
+typedef struct
 {
     char nome[101];
     char numero[12];
+
 } Agenda;
-void ordenar(){
+void ordenar( Agenda l[], int *quant){
+    for (int i = 0 ; i < *quant - 1; i++){
+        for (int j = i; j <*quant - 1; j++){
+            if ( strcmp( l[j].nome, l[j + 1].nome) > 0){
+                Agenda aux = l[j];
+                l[j] = l[j+1];
+                l[j+1] = aux;
+                break;
+            }
+        }
+    }
 
 }
 
@@ -14,6 +25,7 @@ int main(){
     int quant= 0;
     int opcao = -1;
     while (opcao != 5){
+        opcao = -1;
         printf("O QUE DESEJA FAZER AGORA? \n\t");
         printf("[0] Adicionar Conato\n\t");
         printf("[1] Remover Comtato\n\t");
@@ -30,6 +42,7 @@ int main(){
             scanf(" %s", contato[quant].numero);
             quant++;
             printf("--------------------------------\n\n");
+            ordenar(contato, &quant);
 
         }
         else if(opcao == 1){
@@ -62,14 +75,16 @@ int main(){
         else if ( opcao == 3){
             printf("[3] RENOMEAR CONTATO\n\n");
             printf("Digite o Indice do Contato: ");
-            int ID = scanf("%d", &ID);
-            if (ID >= quant){
+            int n;
+            scanf("%d", &n);
+            if (n > quant){
                 printf("CONTATO NAO ENCOTRADO!!!\n\n");
                 printf("--------------------------------\n\n");
             }
             else{
                 printf("Digite o Novo Nome: \n\n\t");
-                scanf(" %s", contato[ID].nome);
+                scanf(" %s", contato[n].nome);
+                //strcpy(contato[n].nome, nick);
                 printf("--------------------------------\n\n");
     
             }
