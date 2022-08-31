@@ -8,7 +8,7 @@ typedef struct
 } Agenda;
 void ordenar( Agenda l[], int *quant){
     for (int i = 0 ; i < *quant - 1; i++){
-        for (int j = i; j <*quant - 1; j++){
+        for (int j = 0; j <*quant - 1 -i; j++){
             if ( strcmp( l[j].nome, l[j + 1].nome) > 0){
                 Agenda aux = l[j];
                 l[j] = l[j+1];
@@ -18,6 +18,36 @@ void ordenar( Agenda l[], int *quant){
         }
     }
 
+}
+void ordenarSelection(Agenda l[], int *quant){
+    for (int i = 0; i < *quant-1; i++){
+        int menor = i;
+        for (int j = i; j < *quant; j++){
+           if ( strcmp( l[j].nome, l[menor].nome) > 0){
+               menor = j;
+           }
+        }
+        Agenda aux = l[i];
+        l[i] = l[menor];
+        l[menor] = aux;
+        
+    }
+    
+    
+}
+void ordenarInsert(Agenda l[], int *quant){
+    int i,j;
+    for ( i = 0; i < *quant; i++){
+        Agenda aux = l[i];
+        for (j = i-1; j <=0 && strcmp( l[j].nome, aux[i].nome) > 0 ; j--){
+            l[j+1] = l[j];
+            
+        }
+        l[j+1] = aux;
+        
+    }
+    
+    
 }
 
 int main(){
@@ -42,8 +72,9 @@ int main(){
             scanf(" %s", contato[quant].numero);
             quant++;
             printf("--------------------------------\n\n");
-            ordenar(contato, &quant);
-
+            //ordenar(contato, &quant);
+            //ordenarInsert(contato, &quant);
+            ordenarSelection(contato, &quant);
         }
         else if(opcao == 1){
             printf("[1] REMOVER CONTATO\n\n");
